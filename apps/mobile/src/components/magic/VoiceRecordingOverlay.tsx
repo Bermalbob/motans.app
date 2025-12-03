@@ -7,8 +7,12 @@ import { Ionicons } from "@expo/vector-icons";
 // ============================================================================
 export type VoiceRecordingOverlayProps = {
 	visible: boolean;
+	isRecording?: boolean;
 	onClose: () => void;
-	onFinish: (fakeUri: string | null) => void;
+	onTranscriptionComplete?: (text: string) => void;
+	onImproveText?: (text: string) => void;
+	onContinue?: (text: string) => void;
+	onFinish?: (fakeUri: string | null) => void;
 };
 
 // ============================================================================
@@ -16,15 +20,29 @@ export type VoiceRecordingOverlayProps = {
 // ============================================================================
 export const VoiceRecordingOverlay: React.FC<VoiceRecordingOverlayProps> = ({
 	visible,
+	isRecording: _isRecording,
 	onClose,
+	onTranscriptionComplete,
+	onContinue,
 	onFinish,
 }) => {
 	// Si no está visible, no renderizamos nada
 	if (!visible) return null;
 
 	const handleFakeFinish = () => {
-		// De momento devolvemos un "uri" falso
-		onFinish("file:///fake/voice-recording.m4a");
+		// Texto de ejemplo para la transcripción
+		const fakeText = "Esto es un texto de ejemplo transcrito por voz";
+		
+		// Llamar al callback apropiado
+		if (onTranscriptionComplete) {
+			onTranscriptionComplete(fakeText);
+		}
+		if (onContinue) {
+			onContinue(fakeText);
+		}
+		if (onFinish) {
+			onFinish("file:///fake/voice-recording.m4a");
+		}
 		onClose();
 	};
 

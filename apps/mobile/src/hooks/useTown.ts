@@ -36,8 +36,8 @@ export function useCurrentTown(): {
   
   // Por ahora, devolvemos datos básicos
   return {
-    townId: user.currentTownId,
-    townName: `Pueblo ${user.currentTownId}`, // TODO: Obtener nombre real
+    townId: user.currentTownId ?? null,
+    townName: user.currentTownId ? `Pueblo ${user.currentTownId}` : null, // TODO: Obtener nombre real
     isLoading: false,
     error: null,
   };
@@ -69,8 +69,8 @@ export function useHomeTown(): {
   // TODO(Motans): Fetchear datos completos del pueblo desde backend
   
   return {
-    townId: user.homeTownId,
-    townName: `Pueblo ${user.homeTownId}`, // TODO: Obtener nombre real
+    townId: user.homeTownId ?? null,
+    townName: user.homeTownId ? `Pueblo ${user.homeTownId}` : null, // TODO: Obtener nombre real
     isLoading: false,
     error: null,
   };
